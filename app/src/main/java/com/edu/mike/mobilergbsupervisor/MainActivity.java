@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
         final TextView redText = (TextView)findViewById(R.id.rText);
         final TextView greenText = (TextView)findViewById(R.id.gText);
         final TextView blueText = (TextView)findViewById(R.id.bText);
+
+
+        redSlider.getProgressDrawable().setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+        redSlider.getThumb().setColorFilter(Color.RED,PorterDuff.Mode.SRC_IN);
+        greenSlider.getProgressDrawable().setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);
+        greenSlider.getThumb().setColorFilter(Color.GREEN,PorterDuff.Mode.SRC_IN);
+        blueSlider.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
+        blueSlider.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
 
         redSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
