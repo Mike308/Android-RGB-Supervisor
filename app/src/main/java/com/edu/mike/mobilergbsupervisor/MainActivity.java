@@ -1,26 +1,26 @@
 package com.edu.mike.mobilergbsupervisor;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.BitmapDrawable;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
     Button button;
+    Button setAnimationBtn;
+
     SeekBar redSlider;
     SeekBar greenSlider;
     SeekBar blueSlider;
+
 
 
     @Override
@@ -29,10 +29,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         button = (Button)findViewById(R.id.button4);
+        setAnimationBtn = (Button)findViewById(R.id.setAnnimation);
         button.setBackgroundColor(Color.BLACK);
-         redSlider = (SeekBar)findViewById(R.id.rSlider);
-         greenSlider = (SeekBar)findViewById(R.id.gSlider);
-         blueSlider = (SeekBar)findViewById(R.id.bSlider);
+        redSlider = (SeekBar)findViewById(R.id.rSlider);
+        greenSlider = (SeekBar)findViewById(R.id.gSlider);
+        blueSlider = (SeekBar)findViewById(R.id.bSlider);
 
         final TextView redText = (TextView)findViewById(R.id.rText);
         final TextView greenText = (TextView)findViewById(R.id.gText);
@@ -102,6 +103,30 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        setAnimationBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                AlertDialog.Builder setAnimationBuilder = new AlertDialog.Builder(MainActivity.this);
+                View setAnimationView = getLayoutInflater().inflate(R.layout.set_animation,null);
+                Spinner animationsList = (Spinner)setAnimationView.findViewById(R.id.animationsSpinner);
+                String [] animationsArray = new String[] {"Circle of Color","Random Color"};
+                ArrayAdapter<String> animationsAdapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_spinner_item,animationsArray);
+
+                animationsList.setAdapter(animationsAdapter);
+
+
+
+                setAnimationBuilder.setView(setAnimationView);
+                AlertDialog setAnimationDialog = setAnimationBuilder.create();
+                setAnimationDialog.show();
+
+
 
             }
         });
