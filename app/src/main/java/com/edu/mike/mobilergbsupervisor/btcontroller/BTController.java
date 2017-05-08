@@ -1,7 +1,12 @@
 package com.edu.mike.mobilergbsupervisor.btcontroller;
 
+import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -44,6 +49,76 @@ public class BTController {
         }
 
     }
+
+    private class ConnectBt extends AsyncTask<Void,Void,Void>{
+
+        private boolean isConnectedSuccess = true;
+        private ProgressDialog connectProgress;
+
+
+        @Override
+        protected void onPreExecute() {
+
+            connectProgress = ProgressDialog.show(context,"Connecting...","Please wait...");
+
+
+        }
+
+        @Override
+        protected Void doInBackground(Void... devices) {
+
+            try{
+
+                if (bluetoothSocket == null || !isConnected){
+
+
+                    bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                    BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddres);
+                    bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(UUID);
+                    BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+
+
+
+
+
+                }
+            }catch (IOException e){
+
+
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            if (!isConnectedSuccess){
+
+                Toast.makeText(context,"Connection Failed",Toast.LENGTH_LONG);
+
+            }else {
+
+                Toast.makeText(context,"Connected!",Toast.LENGTH_LONG);
+
+            }
+
+            connectProgress.dismiss();
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
