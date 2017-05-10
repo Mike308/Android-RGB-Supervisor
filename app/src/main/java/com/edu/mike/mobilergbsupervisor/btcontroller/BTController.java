@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -47,6 +49,23 @@ public class BTController {
             }
 
         }
+
+    }
+
+    public Set<BTDeviceModel> getBTDevices(){
+
+        Set<BluetoothDevice> btDeviceSet = bluetoothAdapter.getBondedDevices();
+        Set<BTDeviceModel> btDeviceModelSet = new HashSet<>();
+
+        for (BluetoothDevice btDevice: btDeviceSet){
+
+            btDeviceModelSet.add(new BTDeviceModel(btDevice.getName(),btDevice.getAddress()));
+
+
+        }
+
+        return btDeviceModelSet;
+
 
     }
 
