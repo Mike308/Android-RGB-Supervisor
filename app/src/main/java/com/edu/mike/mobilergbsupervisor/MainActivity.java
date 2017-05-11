@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
         blueSlider.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
         blueSlider.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
+        connectBtn = (Button)findViewById(R.id.connectBtn);
+
+        btController = new BTController(MainActivity.this);
+
+
+
+
 
         redSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
