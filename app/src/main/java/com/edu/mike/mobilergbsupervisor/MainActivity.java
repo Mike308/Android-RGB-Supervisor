@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
                 greenText.setText(Integer.toString(i));
                 setProbeColor(redSlider.getProgress(),greenSlider.getProgress(),blueSlider.getProgress());
+
             }
 
             @Override
@@ -149,6 +150,56 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        connectBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                ArrayList<String> deviceAdressList = new ArrayList<>();
+
+                Set<BTDeviceModel> deviceSet = btController.getBTDevices();
+
+                for (BTDeviceModel device: deviceSet){
+
+                    deviceAdressList.add(device.getDeviceAddres());
+
+                }
+
+                AlertDialog.Builder  deviceListBuilder = new AlertDialog.Builder(MainActivity.this);
+                View btDeviceListView = getLayoutInflater().inflate(R.layout.device_list,null);
+                ListView lsBtDevice = (ListView)btDeviceListView.findViewById(R.id.deviceList);
+                ArrayAdapter deviceAdapter = new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,deviceAdressList);
+                lsBtDevice.setAdapter(deviceAdapter);
+                deviceListBuilder.setView(btDeviceListView);
+                final AlertDialog deviceListDialog = deviceListBuilder.create();
+                deviceListDialog.show();
+                lsBtDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        String deviceAdressStr =  ((TextView)view).getText().toString();
+                        btController.connectBt(deviceAdressStr);
+                        deviceListDialog.hide();
+
+
+
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+            }
+        });
+
 
 
 
@@ -167,4 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
 }
