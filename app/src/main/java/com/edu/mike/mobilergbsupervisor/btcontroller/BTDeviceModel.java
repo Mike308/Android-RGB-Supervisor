@@ -7,19 +7,19 @@ package com.edu.mike.mobilergbsupervisor.btcontroller;
 public class BTDeviceModel {
 
     private String deviceName;
-    private String deviceAdress;
+    private String deviceAddres;
 
-    public BTDeviceModel(String deviceName, String deviceAdress) {
+    public BTDeviceModel(String deviceName, String deviceAddress) {
         this.deviceName = deviceName;
-        this.deviceAdress = deviceAdress;
+        this.deviceAddres = deviceAddress;
     }
 
     public String getDeviceName() {
         return deviceName;
     }
 
-    public String getDeviceAdress() {
-        return deviceAdress;
+    public String getDeviceAddres() {
+        return deviceAddres;
     }
 
 
