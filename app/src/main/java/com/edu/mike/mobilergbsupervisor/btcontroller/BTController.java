@@ -34,6 +34,14 @@ public class BTController {
 
     }
 
+    public void connectBt(String deviceAddres){
+
+        this.deviceAddres = deviceAddres;
+        new ConnectBt().execute();
+
+
+    }
+
     public void sendBT(String str){
 
         if (bluetoothSocket != null){
