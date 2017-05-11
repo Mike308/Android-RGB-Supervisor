@@ -60,8 +60,11 @@ public class BTController {
 
     }
 
+
+
     public Set<BTDeviceModel> getBTDevices(){
 
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> btDeviceSet = bluetoothAdapter.getBondedDevices();
         Set<BTDeviceModel> btDeviceModelSet = new HashSet<>();
 
