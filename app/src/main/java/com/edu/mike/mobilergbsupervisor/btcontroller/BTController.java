@@ -104,8 +104,9 @@ public class BTController {
 
                     bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddres);
-                    bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(UUID);
+                    bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(myUUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
+                    bluetoothSocket.connect();
 
 
 
