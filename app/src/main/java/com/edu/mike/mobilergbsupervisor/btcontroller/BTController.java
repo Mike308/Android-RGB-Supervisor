@@ -25,7 +25,7 @@ public class BTController {
     private  Context context;
     private String deviceAddres = " ";
 
-    static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    static final UUID MY_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
 
     public BTController(Context context){
@@ -116,7 +116,7 @@ public class BTController {
 
                     bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                     BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddres);
-                    bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(myUUID);
+                    bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(MY_UUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                     bluetoothSocket.connect();
 
