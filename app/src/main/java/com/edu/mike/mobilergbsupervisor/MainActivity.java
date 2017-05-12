@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTController;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -154,37 +155,51 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ArrayList<String> deviceAdressList = new ArrayList<>();
+                if (!btController.getConnectionStatus()) {
 
-                Set<BTDeviceModel> deviceSet = btController.getBTDevices();
+                    ArrayList<String> deviceAdressList = new ArrayList<>();
 
-                for (BTDeviceModel device: deviceSet){
+                    Set<BTDeviceModel> deviceSet = btController.getBTDevices();
 
-                    deviceAdressList.add(device.getDeviceAddres());
+                    for (BTDeviceModel device : deviceSet) {
 
-                }
-
-                AlertDialog.Builder  deviceListBuilder = new AlertDialog.Builder(MainActivity.this);
-                View btDeviceListView = getLayoutInflater().inflate(R.layout.device_list,null);
-                ListView lsBtDevice = (ListView)btDeviceListView.findViewById(R.id.deviceList);
-                ArrayAdapter deviceAdapter = new ArrayAdapter(MainActivity.this,android.R.layout.simple_list_item_1,deviceAdressList);
-                lsBtDevice.setAdapter(deviceAdapter);
-                deviceListBuilder.setView(btDeviceListView);
-                final AlertDialog deviceListDialog = deviceListBuilder.create();
-                deviceListDialog.show();
-                lsBtDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                        String deviceAdressStr =  ((TextView)view).getText().toString();
-                        btController.connectBt(deviceAdressStr);
-                        deviceListDialog.hide();
-
-
-
+                        deviceAdressList.add(device.getDeviceAddres());
 
                     }
-                });
+
+                    AlertDialog.Builder deviceListBuilder = new AlertDialog.Builder(MainActivity.this);
+                    View btDeviceListView = getLayoutInflater().inflate(R.layout.device_list, null);
+                    ListView lsBtDevice = (ListView) btDeviceListView.findViewById(R.id.deviceList);
+                    ArrayAdapter deviceAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, deviceAdressList);
+                    lsBtDevice.setAdapter(deviceAdapter);
+                    deviceListBuilder.setView(btDeviceListView);
+                    final AlertDialog deviceListDialog = deviceListBuilder.create();
+                    deviceListDialog.show();
+                    lsBtDevice.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                            String deviceAdressStr = ((TextView) view).getText().toString();
+                            btController.connectBt(deviceAdressStr);
+                            deviceListDialog.hide();
+                            connectBtn.setText("DISCONNECT");
+
+
+                        }
+                    });
+
+                }else{
+
+                    try {
+                        btController.disconnectBt();
+                        connectBtn.setText("CONNECT");
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                }
 
 
 
