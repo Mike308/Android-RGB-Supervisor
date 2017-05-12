@@ -42,6 +42,18 @@ public class BTController {
 
     }
 
+    public void disconnectBt() throws IOException {
+
+        bluetoothSocket.close();
+        this.isConnected = false;
+
+    }
+
+    public boolean getConnectionStatus(){
+
+        return this.isConnected;
+    }
+
     public void sendBT(String str){
 
         if (bluetoothSocket != null){
