@@ -139,12 +139,12 @@ public class BTController {
 
             if (!isConnectedSuccess){
 
-                Toast.makeText(context,"Connection Failed",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Connection Failed",Toast.LENGTH_SHORT).show();
 
 
             }else {
 
-                Toast.makeText(context,"Connected!",Toast.LENGTH_LONG).show();
+                Toast.makeText(context,"Connected!",Toast.LENGTH_SHORT).show();
                 isConnected = true;
 
             }
