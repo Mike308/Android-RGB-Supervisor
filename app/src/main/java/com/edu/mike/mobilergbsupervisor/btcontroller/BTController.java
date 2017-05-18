@@ -36,6 +36,9 @@ public class BTController {
     public BTController(Context context){
 
         this.context = context;
+        eventBus = EventBus.getDefault();
+
+
 
     }
 
