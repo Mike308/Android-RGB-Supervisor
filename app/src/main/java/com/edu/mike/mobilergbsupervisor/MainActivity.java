@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
     BTController btController;
 
+    TextView temeperatureDisplay;
+
+    EventBus listenerEvent = EventBus.getDefault();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
