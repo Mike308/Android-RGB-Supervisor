@@ -6,12 +6,21 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
+import android.os.Handler;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+
+import java.util.logging.LogRecord;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by Mike on 2017-05-08.
@@ -214,14 +223,17 @@ public class BTController {
                                     final String data = new String(encodedBytes, "US-ASCII");
                                     readBufferPosition = 0;
 
-                                    handler.post(new Runnable() {
-                                        @Override
-                                        public void run() {
+                                    eventBus.post(new ReceivedString(data));
 
-                                            Toast.makeText(context,data,Toast.LENGTH_LONG).show();
-                                            System.out.println("Data: "+data);
-                                        }
-                                    });
+
+//                                    handler.post(new Runnable() {
+//                                        @Override
+//                                        public void run() {
+//
+//                                            Toast.makeText(context,data,Toast.LENGTH_LONG).show();
+//                                            //System.out.println("Data: "+data);
+//                                        }
+//                                    });
 
                                 } else{
 
