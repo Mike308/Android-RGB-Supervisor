@@ -168,6 +168,92 @@ public class BTController {
     }
 
 
+    public void bluetoothDataListener(){
+
+        Log.d(TAG, "bluetoothDataListener: Test");
+
+        final Handler handler = new Handler();
+        final byte delimiter = 10;
+        stopWorker = false;
+        final byte[] readBuffer = new byte[1024];
+        readBufferPosition = 0;
+
+        workerThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                while (!Thread.currentThread().isInterrupted() && !stopWorker){
+
+                   // Log.i(TAG, "run: Test");
+
+
+                    try{
+
+
+                        int availableBytes = incomingStream.available();
+
+                        if (availableBytes > 0){
+
+                            byte [] pocketBytes = new byte[availableBytes];
+                            incomingStream.read(pocketBytes);
+
+                            for (int i = 0; i < availableBytes; i++){
+
+                                byte receivedByte = pocketBytes[i];
+
+                                if (receivedByte == delimiter) {
+
+                                    byte[] encodedBytes = new byte[readBufferPosition];
+                                    System.arraycopy(readBuffer, 0, encodedBytes, 0, encodedBytes.length);
+                                    final String data = new String(encodedBytes, "US-ASCII");
+                                    readBufferPosition = 0;
+
+                                    handler.post(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            Toast.makeText(context,data,Toast.LENGTH_LONG).show();
+                                            System.out.println("Data: "+data);
+                                        }
+                                    });
+
+                                } else{
+
+                                        readBuffer[readBufferPosition++] = receivedByte;
+
+                                    }
+
+                                }
+
+                            }
+
+
+
+
+
+                    }catch (IOException e){
+
+                        Log.d(TAG, "run: "+e.toString());
+
+                    }
+
+
+
+                }
+
+            }
+        });
+
+        workerThread.start();
+
+
+
+
+    }
+
+
+
+
 
 
 
