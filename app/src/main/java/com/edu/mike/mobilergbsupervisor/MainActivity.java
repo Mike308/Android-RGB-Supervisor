@@ -5,6 +5,7 @@ import android.graphics.PorterDuff;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,9 +14,16 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTController;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
+import com.edu.mike.mobilergbsupervisor.btcontroller.ReceivedString;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -160,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
+
                 if (!btController.getConnectionStatus()) {
 
                     ArrayList<String> deviceAdressList = new ArrayList<>();
@@ -239,6 +249,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceivedEvent (ReceivedString receivedString){
+
+        temeperatureDisplay.setText(receivedString.getReceivedString());
 
 
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        listenerEvent.register(this);
+
+    }
+
+    @Override
+    protected void onStop() {
+        listenerEvent.unregister(this);
+        super.onStop();
+    }
 }
