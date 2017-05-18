@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         redSlider = (SeekBar)findViewById(R.id.rSlider);
         greenSlider = (SeekBar)findViewById(R.id.gSlider);
         blueSlider = (SeekBar)findViewById(R.id.bSlider);
+        temeperatureDisplay = (TextView)findViewById(R.id.textView8);
 
         final TextView redText = (TextView)findViewById(R.id.rText);
         final TextView greenText = (TextView)findViewById(R.id.gText);
