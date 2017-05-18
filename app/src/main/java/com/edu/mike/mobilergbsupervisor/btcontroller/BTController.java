@@ -130,6 +130,8 @@ public class BTController {
                     bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(MY_UUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                     bluetoothSocket.connect();
+                    incomingStream = bluetoothSocket.getInputStream();
+                    //bluetoothDataListener();
 
 
 
