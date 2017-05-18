@@ -159,6 +159,8 @@ public class BTController {
 
                 Toast.makeText(context,"Connected!",Toast.LENGTH_SHORT).show();
                 isConnected = true;
+                bluetoothDataListener();
+
 
             }
 
