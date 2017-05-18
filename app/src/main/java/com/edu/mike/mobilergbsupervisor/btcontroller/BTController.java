@@ -44,12 +44,19 @@ public class BTController {
         new ConnectBt().execute();
 
 
+
+
+
+
+
+
     }
 
     public void disconnectBt() throws IOException {
 
         bluetoothSocket.close();
         this.isConnected = false;
+        this.stopWorker = true;
 
     }
 
