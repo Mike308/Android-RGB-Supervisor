@@ -5,6 +5,7 @@ import android.content.Context;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTController;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
 
+import java.io.IOException;
 import java.util.Set;
 
 /**
@@ -33,21 +34,32 @@ public class Maincontroller extends BTController {
         sendBT("AT+HSV"+Integer.toString(h)+","+Integer.toString(s)+","+Integer.toString(v));
     }
 
-    public Set<BTDeviceModel> loadControllerAdress(){
+    public Set<BTDeviceModel> getControllerAddress(){
 
         return getBTDevices();
 
     }
 
-    public boolean  connectToController(String deviceAddress){
+    public void  connectToController(String deviceAddress){
 
         connectBt(deviceAddress);
 
-        return getConnectionStatus();
 
     }
 
-    
+    public void disconnectFromController() throws IOException {
+
+        disconnectBt();
+    }
+
+    public boolean getStatus(){
+
+        return getConnectionStatus();
+    }
+
+
+
+
 
 
 
