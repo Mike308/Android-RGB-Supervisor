@@ -12,10 +12,10 @@ import java.util.Set;
  * Created by Mike on 2017-05-27.
  */
 
-public class Maincontroller extends BTController {
+public class MainController extends BTController {
 
 
-    public Maincontroller(Context context){
+    public MainController(Context context){
 
         super(context);
 
