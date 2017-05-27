@@ -51,7 +51,7 @@ public class BTController {
 
     }
 
-    public void connectBt(String deviceAddres){
+    protected void connectBt(String deviceAddres){
 
         this.deviceAddres = deviceAddres;
         new ConnectBt().execute();
@@ -65,7 +65,7 @@ public class BTController {
 
     }
 
-    public void disconnectBt() throws IOException {
+    protected void disconnectBt() throws IOException {
 
         bluetoothSocket.close();
         this.isConnected = false;
@@ -73,12 +73,12 @@ public class BTController {
 
     }
 
-    public boolean getConnectionStatus(){
+    protected boolean getConnectionStatus(){
 
         return this.isConnected;
     }
 
-    public void sendBT(String str){
+    protected void sendBT(String str){
 
         if (bluetoothSocket != null){
 
@@ -98,7 +98,7 @@ public class BTController {
 
 
 
-    public Set<BTDeviceModel> getBTDevices(){
+    protected Set<BTDeviceModel> getBTDevices(){
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Set<BluetoothDevice> btDeviceSet = bluetoothAdapter.getBondedDevices();
