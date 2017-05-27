@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTController;
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
 import com.edu.mike.mobilergbsupervisor.btcontroller.ReceivedString;
+import com.edu.mike.mobilergbsupervisor.maincontroller.Maincontroller;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,6 +29,8 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
+import android.os.Handler;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     SeekBar greenSlider;
     SeekBar blueSlider;
 
-    BTController btController;
+    Maincontroller rgbController;
 
     TextView temeperatureDisplay;
 
@@ -73,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         blueSlider.getThumb().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
 
         connectBtn = (Button)findViewById(R.id.connectBtn);
+        rgbController = new Maincontroller(MainActivity.this);
 
-        btController = new BTController(MainActivity.this);
 
 
 
@@ -82,10 +85,24 @@ public class MainActivity extends AppCompatActivity {
 
         redSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar, final int i, boolean b) {
 
                 redText.setText(Integer.toString(i));
                 setProbeColor(redSlider.getProgress(),greenSlider.getProgress(),blueSlider.getProgress());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        rgbController.setRGB(i,greenSlider.getProgress(),blueSlider.getProgress());
+
+
+                    }
+                },1000);
+
+
+
+
 
 
             }
@@ -107,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
 
                 greenText.setText(Integer.toString(i));
                 setProbeColor(redSlider.getProgress(),greenSlider.getProgress(),blueSlider.getProgress());
+
 
             }
 
@@ -170,22 +188,22 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                if (!btController.getConnectionStatus()) {
+                if (!rgbController.getStatus()) {
 
-                    ArrayList<String> deviceAdressList = new ArrayList<>();
+                    ArrayList<String> deviceAddressList = new ArrayList<>();
 
-                    Set<BTDeviceModel> deviceSet = btController.getBTDevices();
+                    Set<BTDeviceModel> deviceSet = rgbController.getControllerAddress();
 
                     for (BTDeviceModel device : deviceSet) {
 
-                        deviceAdressList.add(device.getDeviceAddres());
+                        deviceAddressList.add(device.getDeviceAddres());
 
                     }
 
                     AlertDialog.Builder deviceListBuilder = new AlertDialog.Builder(MainActivity.this);
                     View btDeviceListView = getLayoutInflater().inflate(R.layout.device_list, null);
                     ListView lsBtDevice = (ListView) btDeviceListView.findViewById(R.id.deviceList);
-                    ArrayAdapter deviceAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, deviceAdressList);
+                    ArrayAdapter deviceAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, deviceAddressList);
                     lsBtDevice.setAdapter(deviceAdapter);
                     deviceListBuilder.setView(btDeviceListView);
                     final AlertDialog deviceListDialog = deviceListBuilder.create();
@@ -194,8 +212,8 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                            String deviceAdressStr = ((TextView) view).getText().toString();
-                            btController.connectBt(deviceAdressStr);
+                            String deviceAddressStr = ((TextView) view).getText().toString();
+                            rgbController.connectToController(deviceAddressStr);
                             deviceListDialog.hide();
                             connectBtn.setText("DISCONNECT");
 
@@ -206,7 +224,7 @@ public class MainActivity extends AppCompatActivity {
                 }else{
 
                     try {
-                        btController.disconnectBt();
+                        rgbController.disconnectFromController();
                         connectBtn.setText("CONNECT");
 
                     } catch (IOException e) {
