@@ -116,10 +116,21 @@ public class MainActivity extends AppCompatActivity {
 
         greenSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar,final int i, boolean b) {
 
                 greenText.setText(Integer.toString(i));
                 setProbeColor(redSlider.getProgress(),greenSlider.getProgress(),blueSlider.getProgress());
+                Handler  handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        rgbController.setRGB(redSlider.getProgress(),i,blueSlider.getProgress());
+
+                    }
+                },1000);
+
+
 
 
             }
@@ -137,10 +148,18 @@ public class MainActivity extends AppCompatActivity {
 
         blueSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+            public void onProgressChanged(SeekBar seekBar,final int i, boolean b) {
 
                 blueText.setText(Integer.toString(i));
                 setProbeColor(redSlider.getProgress(),greenSlider.getProgress(),blueSlider.getProgress());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        rgbController.setRGB(redSlider.getProgress(),greenSlider.getProgress(),i);
+                    }
+                },1000);
             }
 
             @Override
