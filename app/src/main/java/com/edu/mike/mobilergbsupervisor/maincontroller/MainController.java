@@ -31,7 +31,7 @@ public class MainController extends BTController {
 
     public void setHSV(int h, int s, int v){
 
-        sendBT("AT+HSV"+Integer.toString(h)+","+Integer.toString(s)+","+Integer.toString(v));
+        sendBT("AT+HSV="+Integer.toString(h)+","+Integer.toString(s)+","+Integer.toString(v)+"\r\n");
     }
 
     public Set<BTDeviceModel> getControllerAddress(){
