@@ -438,6 +438,7 @@ public class HSVColorPickerDialog extends AlertDialog {
                         colorHsv[2] = value;
                         if ( listener != null ) {
                             listener.colorSelected( Color.HSVToColor( colorHsv ) );
+                            eventBus.post(new HSVColor(colorHsv[0],colorHsv[1],colorHsv[2]));
 
 
                         }
