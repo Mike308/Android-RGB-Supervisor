@@ -18,8 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import java.util.logging.LogRecord;
-
 import static android.content.ContentValues.TAG;
 
 /**
@@ -32,7 +30,7 @@ public class BTController {
     private BluetoothSocket bluetoothSocket;
     private boolean isConnected;
     private  Context context;
-    private String deviceAddres = " ";
+    private String deviceAddress = " ";
     private volatile boolean stopWorker = false;
     private Thread workerThread;
     private int readBufferPosition;
@@ -53,7 +51,7 @@ public class BTController {
 
     protected void connectBt(String deviceAddres){
 
-        this.deviceAddres = deviceAddres;
+        this.deviceAddress = deviceAddres;
         new ConnectBt().execute();
 
 
@@ -139,7 +137,7 @@ public class BTController {
 
 
                     bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                    BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddres);
+                    BluetoothDevice bluetoothDevice = bluetoothAdapter.getRemoteDevice(deviceAddress);
                     bluetoothSocket = bluetoothDevice.createInsecureRfcommSocketToServiceRecord(MY_UUID);
                     BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
                     bluetoothSocket.connect();
@@ -226,14 +224,6 @@ public class BTController {
                                     eventBus.post(new ReceivedString(data));
 
 
-//                                    handler.post(new Runnable() {
-//                                        @Override
-//                                        public void run() {
-//
-//                                            Toast.makeText(context,data,Toast.LENGTH_LONG).show();
-//                                            //System.out.println("Data: "+data);
-//                                        }
-//                                    });
 
                                 } else{
 
