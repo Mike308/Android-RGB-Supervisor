@@ -291,6 +291,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetHsv(HSVColor color){
+
+        int h = (int)color.getH();
+        int s = (int)(color.getS()*100);
+        int v = (int)(color.getV()*100);
+        rgbController.setHSV(h,s,v);
+
+
+
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
