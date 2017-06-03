@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -28,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Set;
 import android.os.Handler;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -186,8 +188,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                 AlertDialog.Builder setAnimationBuilder = new AlertDialog.Builder(MainActivity.this);
-                View setAnimationView = getLayoutInflater().inflate(R.layout.set_animation,null);
-                Spinner animationsList = (Spinner)setAnimationView.findViewById(R.id.animationsSpinner);
+                final View setAnimationView = getLayoutInflater().inflate(R.layout.set_animation,null);
+                final Spinner animationsList = (Spinner)setAnimationView.findViewById(R.id.animationsSpinner);
+                Button accept = (Button)setAnimationView.findViewById(R.id.button);
                 String [] animationsArray = new String[] {"Circle of Color","Random Color"};
                 ArrayAdapter<String> animationsAdapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_spinner_item,animationsArray);
 
@@ -196,7 +199,27 @@ public class MainActivity extends AppCompatActivity {
 
 
                 setAnimationBuilder.setView(setAnimationView);
-                AlertDialog setAnimationDialog = setAnimationBuilder.create();
+                final AlertDialog setAnimationDialog = setAnimationBuilder.create();
+
+                accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        EditText speedEdit = (EditText)setAnimationView.findViewById(R.id.speedEdit);
+                        EditText stepEdit = (EditText)setAnimationView.findViewById(R.id.stepEdit);
+                        int mode = animationsList.getSelectedItemPosition();
+                        int speed = Integer.parseInt(speedEdit.getText().toString());
+                        int step  = Integer.parseInt(stepEdit.getText().toString());
+
+                        rgbController.setAnimation(mode,speed,step);
+                        setAnimationDialog.hide();
+
+
+
+                    }
+                });
+
+
                 setAnimationDialog.show();
 
 
