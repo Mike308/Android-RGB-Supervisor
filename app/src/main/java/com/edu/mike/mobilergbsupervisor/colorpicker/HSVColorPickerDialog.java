@@ -19,7 +19,11 @@ import android.widget.RelativeLayout;
 import org.greenrobot.eventbus.EventBus;
 
 /**
- * Created by Mike on 2017-06-03.
+ * source: https://github.com/jesperborgstrup/buzzingandroid/blob/master/src/com/buzzingandroid/ui/HSVColorPickerDialog.java
+ */
+
+/**
+ * Modified by Mike on 2017-06-03.
  */
 
 public class HSVColorPickerDialog extends AlertDialog {
