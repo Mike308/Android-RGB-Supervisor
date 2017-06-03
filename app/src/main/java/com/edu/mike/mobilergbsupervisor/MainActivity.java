@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
 import com.edu.mike.mobilergbsupervisor.btcontroller.ReceivedString;
+import com.edu.mike.mobilergbsupervisor.colorpicker.HSVColor;
+import com.edu.mike.mobilergbsupervisor.colorpicker.HSVColorPickerDialog;
 import com.edu.mike.mobilergbsupervisor.maincontroller.MainController;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button button;
     Button setAnimationBtn;
     Button connectBtn;
+    Button colorPallete;
 
 
     SeekBar redSlider;
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     TextView temperatureDisplay;
 
     EventBus listenerEvent = EventBus.getDefault();
+
+    float [] hsvColor = new float[3];
+
 
 
     @Override
@@ -58,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         greenSlider = (SeekBar)findViewById(R.id.gSlider);
         blueSlider = (SeekBar)findViewById(R.id.bSlider);
         temperatureDisplay = (TextView)findViewById(R.id.textView8);
+        colorPallete = (Button)findViewById(R.id.colorPallete);
 
         final TextView redText = (TextView)findViewById(R.id.rText);
         final TextView greenText = (TextView)findViewById(R.id.gText);
@@ -259,6 +266,31 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+            }
+        });
+
+
+        colorPallete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                HSVColorPickerDialog colorPicker = new HSVColorPickerDialog(MainActivity.this, 0xFF4488CC, new HSVColorPickerDialog.OnColorSelectedListener() {
+                    @Override
+                    public void colorSelected(Integer color) {
+
+                        Color.colorToHSV(color,hsvColor);
+                        int h = (int)(hsvColor[0]);
+                        int s = (int)(hsvColor[1]*100);
+                        int v = (int)(hsvColor[2]*100);
+
+                        rgbController.setHSV(h,s,v);
+
+                    }
+                });
+
+                colorPicker.setTitle("HSV");
+                colorPicker.show();
 
             }
         });
