@@ -34,9 +34,9 @@ public class MainController extends BTController {
         sendBT("AT+HSV="+Integer.toString(h)+","+Integer.toString(s)+","+Integer.toString(v)+"\r\n");
     }
 
-    public void setANIM(int mode, int speed, int step){
+    public void setAnimation(int mode, int speed, int step){
 
-        sendBT("AT+ANIM="+Integer.toString(mode)+","+Integer.toString(speed)+","+Integer.toString(step));
+        sendBT("AT+ANIM="+Integer.toString(mode)+","+Integer.toString(speed)+","+Integer.toString(step)+"\r\n");
 
     }
 
