@@ -266,17 +266,25 @@ public class MainActivity extends AppCompatActivity {
                             String deviceAddressStr = ((TextView) view).getText().toString();
                             rgbController.connectToController(deviceAddressStr);
                             deviceListDialog.hide();
-                            connectBtn.setText("DISCONNECT");
+                           connectBtn.setText("DISCONNECT");
+
+
+
+
 
 
                         }
                     });
+
+
+
 
                 }else{
 
                     try {
                         rgbController.disconnectFromController();
                         connectBtn.setText("CONNECT");
+                        poolingModuleHandler.removeCallbacks(pool);
 
                     } catch (IOException e) {
                         e.printStackTrace();
