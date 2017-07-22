@@ -151,6 +151,8 @@ public class BTController {
                 }
             }catch (IOException e){
 
+                isConnected = false;
+                e.printStackTrace();
 
             }
 
@@ -168,8 +170,11 @@ public class BTController {
 
             }else {
 
-                Toast.makeText(context,"Connected!",Toast.LENGTH_SHORT).show();
                 isConnected = true;
+
+                Toast.makeText(context,"Connected!",Toast.LENGTH_SHORT).show();
+                eventBus.post(new ConnectionStatus(true));
+
                 bluetoothDataListener();
 
 
