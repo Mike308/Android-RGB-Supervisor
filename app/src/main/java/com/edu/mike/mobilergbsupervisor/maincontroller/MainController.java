@@ -40,6 +40,11 @@ public class MainController extends BTController {
 
     }
 
+    public void getTemp(){
+
+        sendBT("AT+TEMP?\r\n");
+    }
+
     public Set<BTDeviceModel> getControllerAddress(){
 
         return getBTDevices();
