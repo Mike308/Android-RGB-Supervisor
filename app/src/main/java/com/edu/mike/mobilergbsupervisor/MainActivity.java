@@ -2,9 +2,11 @@ package com.edu.mike.mobilergbsupervisor;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.Looper;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,6 +18,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.edu.mike.mobilergbsupervisor.btcontroller.BTDeviceModel;
+import com.edu.mike.mobilergbsupervisor.btcontroller.ConnectionStatus;
 import com.edu.mike.mobilergbsupervisor.btcontroller.ReceivedString;
 import com.edu.mike.mobilergbsupervisor.colorpicker.HSVColor;
 import com.edu.mike.mobilergbsupervisor.colorpicker.HSVColorPickerDialog;
@@ -173,6 +176,7 @@ public class MainActivity extends AppCompatActivity {
                     public void run() {
 
                         rgbController.setRGB(redSlider.getProgress(),greenSlider.getProgress(),i);
+
                     }
                 },1000);
             }
@@ -343,6 +347,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
 
     private void setProbeColor(int r, int g, int b){
 
