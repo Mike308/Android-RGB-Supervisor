@@ -388,6 +388,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onGetConnectionStatus(ConnectionStatus connectionStatus){
+
+        poolingModuleHandler.postDelayed(pool, 1000);
+
+    }
+
+
     @Override
     protected void onStart() {
         super.onStart();
