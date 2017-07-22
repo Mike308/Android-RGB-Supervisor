@@ -351,10 +351,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private Runnable pool = new Runnable() {
+        @Override
+        public void run() {
+
+            rgbController.getTemp();
+            poolingModuleHandler.postDelayed(this,5000);
+            Log.i("getTemperature","getTemperature");
+
+
+
+
+        }
+    };
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onReceivedEvent (ReceivedString receivedString){
 
         temperatureDisplay.setText(receivedString.getReceivedString());
+        Log.i("getTemperature",receivedString.getReceivedString());
 
 
 
