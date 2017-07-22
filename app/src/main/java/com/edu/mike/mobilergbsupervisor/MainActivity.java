@@ -52,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
 
     float [] hsvColor = new float[3];
 
+    Handler poolingModuleHandler;
+    Runnable runnable;
+
 
 
     @Override
