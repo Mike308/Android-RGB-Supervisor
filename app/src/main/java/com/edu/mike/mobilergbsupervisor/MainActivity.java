@@ -86,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
         connectBtn = (Button)findViewById(R.id.connectBtn);
         rgbController = new MainController(MainActivity.this);
 
+        poolingModuleHandler = new Handler(Looper.getMainLooper());
+
+
 
 
 
