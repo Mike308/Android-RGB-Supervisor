@@ -1,5 +1,7 @@
 package com.edu.mike.mobilergbsupervisor;
 
+import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Looper;
@@ -37,15 +39,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button = (Button)findViewById(R.id.button4);
-    Button setAnimationBtn = (Button)findViewById(R.id.setAnnimation);
+    Button button;
+    Button setAnimationBtn;
     Button connectBtn;
-    Button colorPallete = (Button)findViewById(R.id.colorPallete);
+    Button colorPallete;
 
 
-    SeekBar redSlider = (SeekBar)findViewById(R.id.rSlider);
-    SeekBar greenSlider = (SeekBar)findViewById(R.id.gSlider);
-    SeekBar blueSlider = (SeekBar)findViewById(R.id.bSlider);
+    SeekBar redSlider;
+    SeekBar greenSlider;
+    SeekBar blueSlider;
 
     MainController rgbController;
 
@@ -64,6 +66,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         button = (Button)findViewById(R.id.button4);
+         setAnimationBtn = (Button)findViewById(R.id.setAnnimation);
+         colorPallete = (Button)findViewById(R.id.colorPallete);
+         connectBtn = (Button)findViewById(R.id.connectBtn);
+
+         redSlider = (SeekBar)findViewById(R.id.rSlider);
+         greenSlider = (SeekBar)findViewById(R.id.gSlider);
+         blueSlider = (SeekBar)findViewById(R.id.bSlider);
 
         button.setBackgroundColor(Color.BLACK);
         temperatureDisplay = (TextView)findViewById(R.id.textView8);
@@ -259,11 +270,11 @@ public class MainActivity extends AppCompatActivity {
 
                     ArrayList<String> deviceAddressList = new ArrayList<>();
 
-                    Set<BTDeviceModel> deviceSet = rgbController.getControllerAddress();
+                    final Set<BTDeviceModel> deviceSet = rgbController.getControllerAddress();
 
                     for (BTDeviceModel device : deviceSet) {
 
-                        deviceAddressList.add(device.getDeviceAddres());
+                        deviceAddressList.add(device.getDeviceName());
 
                     }
 
@@ -279,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                            String deviceAddressStr = ((TextView) view).getText().toString();
+                            String deviceAddressStr = rgbController.getDeviceAddressByName(((TextView) view).getText().toString(), deviceSet);
                             rgbController.connectToController(deviceAddressStr);
                             deviceListDialog.hide();
                            connectBtn.setText("DISCONNECT");
