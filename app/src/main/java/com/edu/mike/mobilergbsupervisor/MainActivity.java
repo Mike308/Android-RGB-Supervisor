@@ -37,15 +37,15 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button button;
-    Button setAnimationBtn;
+    Button button = (Button)findViewById(R.id.button4);
+    Button setAnimationBtn = (Button)findViewById(R.id.setAnnimation);
     Button connectBtn;
-    Button colorPallete;
+    Button colorPallete = (Button)findViewById(R.id.colorPallete);
 
 
-    SeekBar redSlider;
-    SeekBar greenSlider;
-    SeekBar blueSlider;
+    SeekBar redSlider = (SeekBar)findViewById(R.id.rSlider);
+    SeekBar greenSlider = (SeekBar)findViewById(R.id.gSlider);
+    SeekBar blueSlider = (SeekBar)findViewById(R.id.bSlider);
 
     MainController rgbController;
 
@@ -65,14 +65,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button)findViewById(R.id.button4);
-        setAnimationBtn = (Button)findViewById(R.id.setAnnimation);
         button.setBackgroundColor(Color.BLACK);
-        redSlider = (SeekBar)findViewById(R.id.rSlider);
-        greenSlider = (SeekBar)findViewById(R.id.gSlider);
-        blueSlider = (SeekBar)findViewById(R.id.bSlider);
         temperatureDisplay = (TextView)findViewById(R.id.textView8);
-        colorPallete = (Button)findViewById(R.id.colorPallete);
 
         final TextView redText = (TextView)findViewById(R.id.rText);
         final TextView greenText = (TextView)findViewById(R.id.gText);
@@ -201,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 final View setAnimationView = getLayoutInflater().inflate(R.layout.set_animation,null);
                 final Spinner animationsList = (Spinner)setAnimationView.findViewById(R.id.animationsSpinner);
                 Button accept = (Button)setAnimationView.findViewById(R.id.button);
-                String [] animationsArray = new String[] {"Circle of Color","Random Color"};
+                String [] animationsArray = new String[] {"Circle of Color","Random Color","Breathing","Animation Off"};
                 ArrayAdapter<String> animationsAdapter = new ArrayAdapter<>(MainActivity.this,android.R.layout.simple_spinner_item,animationsArray);
 
                 animationsList.setAdapter(animationsAdapter);
@@ -221,9 +215,27 @@ public class MainActivity extends AppCompatActivity {
                         int speed = Integer.parseInt(speedEdit.getText().toString());
                         int step  = Integer.parseInt(stepEdit.getText().toString());
 
-                        rgbController.setAnimation(mode,speed,step);
-                        setAnimationDialog.hide();
+                        if (mode != 2) {
 
+                            rgbController.setAnimation(mode, speed, step);
+
+
+                        }else {
+
+                            int r = redSlider.getProgress();
+                            int g = greenSlider.getProgress();
+                            int b = blueSlider.getProgress();
+                            float [] hsv = new float[3];
+                            Color.RGBToHSV(r,g,b,hsv);
+                            int s = (int)hsv[1] * 100;
+                            int v = (int)hsv[0] * 100;
+                            rgbController.setHSV((int)hsv[0],s,v);
+                            rgbController.setAnimation(mode, speed, step);
+
+
+                        }
+
+                        setAnimationDialog.hide();
 
 
                     }
