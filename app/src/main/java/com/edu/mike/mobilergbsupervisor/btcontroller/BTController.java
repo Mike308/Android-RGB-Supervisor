@@ -14,6 +14,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -112,6 +113,19 @@ public class BTController {
         return btDeviceModelSet;
 
 
+    }
+
+    public String getDeviceAddressByName(String name, Set<BTDeviceModel> deviceList){
+
+        HashMap<String, String> deviceMap = new HashMap<>();
+
+        for (BTDeviceModel btcDevice: deviceList){
+
+            deviceMap.put(btcDevice.getDeviceName(), btcDevice.getDeviceAddres());
+
+        }
+
+        return deviceMap.get(name);
     }
 
     private class ConnectBt extends AsyncTask<Void,Void,Void>{
